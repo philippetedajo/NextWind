@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios, { Method } from "axios";
 
 interface UseAxiosProps {
-  options: { url: string; method?: Method; input?: object; token?: string };
-  immediate?: boolean;
+  url: string;
+  method?: Method;
+  input?: object;
+  token?: string;
 }
 
-export const useAxios = ({ options, immediate = false }: UseAxiosProps) => {
+export const useAxios = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState(undefined);
   const [error, setError] = useState({});
 
-  const executeFetch = () => {
+  const getData = (options: UseAxiosProps) => {
     let header = { "Content-Type": "application/json" };
     if (options.token) header["Authorization"] = options.token;
 
@@ -35,11 +37,5 @@ export const useAxios = ({ options, immediate = false }: UseAxiosProps) => {
       });
   };
 
-  useEffect(() => {
-    if (immediate) {
-      executeFetch();
-    }
-  }, [immediate]);
-
-  return { data, isLoading, error, executeFetch };
+  return { data, isLoading, error, getData };
 };
