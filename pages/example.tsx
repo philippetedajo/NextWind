@@ -10,7 +10,9 @@ const Example = () => {
       url: `https://fabrik-api.herokuapp.com/api/v1/fake/users`,
       method: "GET",
     });
-  }, []);
+
+    //example : refresh data if video change
+  }, [allVideo.data]);
 
   const onGetAllVideo = () => {
     allVideo.getData({
