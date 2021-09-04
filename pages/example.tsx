@@ -1,27 +1,36 @@
 import React from "react";
 import { useAxios } from "../hooks/useAxios";
 
-const Execute = () => {
-  const { data, isLoading, executeFetch } = useAxios({
+const Example2 = () => {
+  const profile = useAxios({
     options: {
       url: `https://fabrik-api.herokuapp.com/api/v1/fake/users
 `,
       method: "GET",
     },
+    immediate: true,
+  });
+
+  const video = useAxios({
+    options: {
+      url: `https://fabrik-api.herokuapp.com/api/v1/fake/video/lists`,
+      method: "GET",
+    },
     immediate: false,
   });
 
-  const handleOnClick = async () => {
-    await executeFetch();
-  };
+  console.log("Video", video);
+  console.log("Profile : ", profile);
 
-  console.log(data, isLoading);
+  const onClick = async () => {
+    await video.executeFetch();
+  };
 
   return (
     <div>
-      <button onClick={handleOnClick}>Execute function</button>
+      <button onClick={onClick}>Get all videos</button>
     </div>
   );
 };
 
-export default Execute;
+export default Example2;
