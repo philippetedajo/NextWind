@@ -3,12 +3,12 @@ import axios, { Method } from "axios";
 
 interface UseAxiosProps {
   options: { url: string; method?: Method; input?: object; token?: string };
-  immediate: boolean;
+  immediate?: boolean;
 }
 
-export const useAxios = ({ options, immediate }: UseAxiosProps) => {
+export const useAxios = ({ options, immediate = false }: UseAxiosProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [data, setData] = useState({});
+  const [data, setData] = useState(undefined);
   const [error, setError] = useState({});
 
   const executeFetch = () => {
