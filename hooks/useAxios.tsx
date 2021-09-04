@@ -1,28 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios, { Method } from "axios";
 
 interface UseAxiosProps {
-  url: string;
-  method?: Method;
-  input?: object;
-  token?: string;
+  options: { url: string; method?: Method; input?: object; token?: string };
+  immediate: boolean;
 }
 
-export const useAxios = () => {
+export const useAxios = ({ options, immediate }: UseAxiosProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState({});
   const [error, setError] = useState({});
 
-  const getData = ({ url, method = "GET", input, token }: UseAxiosProps) => {
+  const executeFetch = () => {
     let header = { "Content-Type": "application/json" };
-    if (token) header["Authorization"] = token;
+    if (options.token) header["Authorization"] = options.token;
 
-    console.log(input);
+    // for debugging input:
+    // console.log(options.input)
+
     setIsLoading(true);
     axios({
-      url: url,
-      method: method,
-      data: input,
+      url: options.url,
+      method: options.method,
+      data: options.input,
       headers: header,
     })
       .then((response) => {
@@ -35,5 +35,11 @@ export const useAxios = () => {
       });
   };
 
-  return { getData, data, isLoading, error };
+  useEffect(() => {
+    if (immediate) {
+      executeFetch();
+    }
+  }, [immediate]);
+
+  return { data, isLoading, error, executeFetch };
 };
