@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useAxios } from "../hooks/useAxios";
 
-const Example2 = () => {
+const Example = () => {
   const allUsers = useAxios();
   const allVideo = useAxios();
 
@@ -26,6 +26,7 @@ const Example2 = () => {
       </div>
     );
   });
+
   const videoList = allVideo.data?.data?.data.map((el) => {
     return (
       <div key={el.id} className="flex">
@@ -49,4 +50,4 @@ const Example2 = () => {
   );
 };
 
-export default Example2;
+export default Example;
