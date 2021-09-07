@@ -8,15 +8,15 @@ interface UseAxiosProps {
   token?: string;
 }
 
+//normalize the response if necessary
+const responder = (type = false, message = "", data = null) => {
+  return { type: type, message: message, data: data };
+};
+
 export const useAxios = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState(undefined);
   const [error, setError] = useState({});
-
-  //normalize the response if necessary
-  const responder = (type = false, message = "", data = null) => {
-    return { type: type, message: message, data: data };
-  };
 
   //get data from api
   const getData = (options: UseAxiosProps) => {
@@ -34,12 +34,9 @@ export const useAxios = () => {
       headers: header,
     })
       .then((response) => {
-        //if response status is 200 set data else throw new error
-        if (response?.status === 200) {
-          console.log(response.data);
-          setData(response.data);
-          setIsLoading(false);
-        } else throw new Error("API Not functional");
+        console.log(response.data);
+        setData(response.data);
+        setIsLoading(false);
       })
       .then((error: any) => {
         setError(error);
