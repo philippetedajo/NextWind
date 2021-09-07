@@ -22,7 +22,7 @@ const Example = () => {
   };
 
   const onCreateUser = () => {
-    deleteUser.getData({
+    createUser.getData({
       url: `https://fabrik-api.herokuapp.com/api/v1/fake/users/create`,
       method: "POST",
       input: {
@@ -38,12 +38,12 @@ const Example = () => {
 
   const profileList = allUsers.data?.data?.map((el) => {
     return (
-      <div key={el.id} className="flex">
+      <div key={el.id} className="flex w-60 justify-between">
         <Link href={`users/${el.id}`}>
-          <div className="mr-10"> {el.firstname}</div>
+          <div className="mr-10 cursor-pointer"> {el.firstname}</div>
         </Link>
         <div
-          className="border rounded px-2"
+          className="border rounded px-2 cursor-pointer"
           onClick={() => onDeleteUser(el.id)}
         >
           Delete
@@ -60,7 +60,7 @@ const Example = () => {
       </div>
       <div className="text-2xl mb-2">Create a user</div>
       <button className="border rounded px-2" onClick={onCreateUser}>
-        {deleteUser.isLoading ? "...loading" : "Create user"}
+        {createUser.isLoading ? "...loading" : "Create user"}
       </button>
     </div>
   );

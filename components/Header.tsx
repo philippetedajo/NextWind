@@ -16,9 +16,12 @@ export const Header = () => {
 
       {user && user?.isLoggedIn ? (
         <div>
+          <Link href="/example">
+            <span className="text-blue-600 cursor-pointer mr-3"> Example</span>
+          </Link>
           <Link href="/dashboard">
             <span className="text-blue-600 cursor-pointer"> Dashboard</span>
-          </Link>
+          </Link>{" "}
           <button onClick={() => logout()} className="px-3">
             {isLoading ? "Processing..." : "Logout"}
           </button>
