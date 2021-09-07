@@ -15,6 +15,8 @@ const Slug = () => {
     });
   }, [slug]);
 
+  if (singleUser.isLoading) return <div className="p-3">...loading</div>;
+
   return (
     <div className="p-3">
       <div>{singleUser?.data?.data?.id} </div>
