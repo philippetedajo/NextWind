@@ -15,12 +15,14 @@ const Slug = () => {
     });
   }, [slug]);
 
+  const { id, firstname } = singleUser.data.data;
+
   if (singleUser.isLoading) return <div className="p-3">...loading</div>;
 
   return (
     <div className="p-3">
-      <div>{singleUser?.data?.data?.id} </div>
-      <div>{singleUser?.data?.data?.firstname} </div>
+      <div>{id} </div>
+      <div>{firstname} </div>
     </div>
   );
 };
