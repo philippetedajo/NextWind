@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { useEffect } from "react";
 
 interface AuthContextInterface {
   user: any;
@@ -67,6 +68,10 @@ export const AuthProvider = ({ children }) => {
     setUser(response.data);
     console.log(response.data);
   };
+
+  useEffect(() => {
+    checkSession();
+  }, []);
 
   return (
     <AuthContext.Provider

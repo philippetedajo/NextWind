@@ -21,7 +21,7 @@ const Example = () => {
     });
   };
 
-  const profileList = allUsers.data?.data?.data.map((el) => {
+  const profileList = allUsers.data?.data.map((el) => {
     return (
       <div key={el.id} className="flex">
         <div className="mr-10"> {el.firstname}</div>
@@ -29,7 +29,7 @@ const Example = () => {
     );
   });
 
-  const videoList = allVideo.data?.data?.data.map((el) => {
+  const videoList = allVideo.data?.data.map((el) => {
     return (
       <div key={el.id} className="flex">
         <div className="mr-10"> {el.id}</div>

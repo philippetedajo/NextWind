@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { AuthContext } from "../context";
 
@@ -15,6 +16,10 @@ const Dashboard = () => {
   return (
     <div className="w-full h-screen flex flex-col pt-20 items-center">
       <h1 className="text-2xl mb-5">Dashboard</h1>
+
+      <Link href="/">
+        <span className="text-blue-600 cursor-pointer mb-5">Go to Home</span>
+      </Link>
 
       <div className="flex items-center flex-col mb-5">
         <div className="flex items-center flex-col">

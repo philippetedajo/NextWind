@@ -18,10 +18,9 @@ const Register = () => {
     resolver: yupResolver(registerSchema),
   });
 
-  const { checkSession, signup, user, isLoading } = useContext(AuthContext);
+  const { signup, user, isLoading } = useContext(AuthContext);
 
   useEffect(() => {
-    checkSession();
     if (user && user?.isLoggedIn) {
       router.push("/dashboard");
     }

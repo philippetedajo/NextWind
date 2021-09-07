@@ -5,15 +5,10 @@ import { AuthContext } from "../context";
 import { useRouter } from "next/router";
 
 const Home = () => {
-  const { checkSession, user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const router = useRouter();
 
-  useEffect(() => {
-    checkSession();
-    if (user && user?.isLoggedIn) {
-      router.push("/dashboard");
-    }
-  }, [user?.isLoggedIn]);
+  console.log(user);
 
   return (
     <div>

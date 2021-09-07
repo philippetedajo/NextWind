@@ -28,8 +28,11 @@ export const useAxios = () => {
       headers: header,
     })
       .then((response) => {
-        setData(response);
-        setIsLoading(false);
+        //if response status is 200 set data else throw new error
+        if (response?.status === 200) {
+          setData(response.data);
+          setIsLoading(false);
+        } else throw new Error("API Not functional");
       })
       .then((error: any) => {
         setError(error);

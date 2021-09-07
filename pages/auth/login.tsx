@@ -19,10 +19,9 @@ const Login = () => {
     resolver: yupResolver(loginSchema),
   });
 
-  const { checkSession, login, user, isLoading } = useContext(AuthContext);
+  const { login, user, isLoading } = useContext(AuthContext);
 
   useEffect(() => {
-    checkSession();
     if (user && user?.isLoggedIn) {
       router.push("/dashboard");
     }
