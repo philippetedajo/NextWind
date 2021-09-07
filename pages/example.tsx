@@ -1,53 +1,67 @@
 import React, { useEffect } from "react";
+import Link from "next/link";
 import { useAxios } from "../hooks/useAxios";
 
 const Example = () => {
   const allUsers = useAxios();
-  const allVideo = useAxios();
+  const deleteUser = useAxios();
+  const createUser = useAxios();
 
   useEffect(() => {
     allUsers.getData({
       url: `https://fabrik-api.herokuapp.com/api/v1/fake/users`,
       method: "GET",
     });
+  }, [deleteUser.data, createUser.data]);
 
-    //example : refresh data if video change
-  }, [allVideo.data]);
-
-  const onGetAllVideo = () => {
-    allVideo.getData({
-      url: `https://fabrik-api.herokuapp.com/api/v1/fake/video/list`,
-      method: "GET",
+  const onDeleteUser = (userId) => {
+    deleteUser.getData({
+      url: `https://fabrik-api.herokuapp.com/api/v1/fake/users/${userId}`,
+      method: "DELETE",
     });
   };
 
-  const profileList = allUsers.data?.data.map((el) => {
+  const onCreateUser = () => {
+    deleteUser.getData({
+      url: `https://fabrik-api.herokuapp.com/api/v1/fake/users/create`,
+      method: "POST",
+      input: {
+        role: "ROOT",
+        firstname: "test",
+        lastname: "test",
+        password: "password",
+        phone: "1234567",
+        email: "test@test.com",
+      },
+    });
+  };
+
+  const profileList = allUsers.data?.data?.map((el) => {
     return (
       <div key={el.id} className="flex">
-        <div className="mr-10"> {el.firstname}</div>
+        <Link href={`users/${el.id}`}>
+          <div className="mr-10"> {el.firstname}</div>
+        </Link>
+        <div
+          className="border rounded px-2"
+          onClick={() => onDeleteUser(el.id)}
+        >
+          Delete
+        </div>
       </div>
     );
   });
-
-  const videoList = allVideo.data?.data.map((el) => {
-    return (
-      <div key={el.id} className="flex">
-        <div className="mr-10"> {el.id}</div>
-      </div>
-    );
-  });
-
-  console.log("allUser:", allUsers.data);
-  console.log("allVideo:", allVideo.data);
 
   return (
-    <div>
+    <div className="p-3">
       <div className="text-2xl">All profile</div>
-      <div> {allUsers.isLoading ? "loading..." : profileList} </div>
-      <div className="text-2xl" onClick={onGetAllVideo}>
-        all Video
+      <div className="mb-4">
+        {allUsers.isLoading ? "loading..." : profileList}{" "}
       </div>
-      <div> {allVideo.isLoading ? "loading..." : videoList} </div>
+      <div className="text-2xl mb-2">Create a user</div>
+      <button className="border rounded px-2" onClick={onCreateUser}>
+        {deleteUser.isLoading ? "...loading" : "Create user"}
+      </button>
     </div>
   );
 };
