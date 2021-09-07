@@ -19,7 +19,7 @@ export const useAxios = () => {
   const [error, setError] = useState({});
 
   //get data from api
-  const getData = (options: UseAxiosProps) => {
+  const fetchApi = (options: UseAxiosProps) => {
     let header = { "Content-Type": "application/json" };
     if (options.token) header["Authorization"] = options.token;
 
@@ -44,5 +44,5 @@ export const useAxios = () => {
       });
   };
 
-  return { data, isLoading, error, getData };
+  return { data, isLoading, error, fetchApi };
 };

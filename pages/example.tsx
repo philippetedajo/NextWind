@@ -3,26 +3,26 @@ import Link from "next/link";
 import { useAxios } from "../hooks/useAxios";
 
 const Example = () => {
-  const allUsers = useAxios();
+  const getAllUsers = useAxios();
   const deleteUser = useAxios();
   const createUser = useAxios();
 
   useEffect(() => {
-    allUsers.getData({
+    getAllUsers.fetchApi({
       url: `https://fabrik-api.herokuapp.com/api/v1/fake/users`,
       method: "GET",
     });
   }, [deleteUser.data, createUser.data]);
 
   const onDeleteUser = (userId) => {
-    deleteUser.getData({
+    deleteUser.fetchApi({
       url: `https://fabrik-api.herokuapp.com/api/v1/fake/users/${userId}`,
       method: "DELETE",
     });
   };
 
   const onCreateUser = () => {
-    createUser.getData({
+    createUser.fetchApi({
       url: `https://fabrik-api.herokuapp.com/api/v1/fake/users/create`,
       method: "POST",
       input: {
@@ -36,7 +36,7 @@ const Example = () => {
     });
   };
 
-  const profileList = allUsers.data?.data?.map((el) => {
+  const profileList = getAllUsers.data?.data?.map((el) => {
     return (
       <div key={el.id} className="flex w-60 justify-between">
         <Link href={`users/${el.id}`}>
@@ -56,7 +56,7 @@ const Example = () => {
     <div className="p-3">
       <div className="text-2xl">All profile</div>
       <div className="mb-4">
-        {allUsers.isLoading ? "loading..." : profileList}{" "}
+        {getAllUsers.isLoading ? "loading..." : profileList}
       </div>
       <div className="text-2xl mb-2">Create a user</div>
       <button className="border rounded px-2" onClick={onCreateUser}>

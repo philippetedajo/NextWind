@@ -9,7 +9,7 @@ const Slug = () => {
   const { slug } = router.query;
 
   useEffect(() => {
-    singleUser.getData({
+    singleUser.fetchApi({
       url: `https://fabrik-api.herokuapp.com/api/v1/fake/users/${slug}`,
       method: "GET",
     });

@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 
 const Home = () => {
   const { user } = useContext(AuthContext);
-  const router = useRouter();
 
   console.log(user);
 
