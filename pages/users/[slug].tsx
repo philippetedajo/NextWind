@@ -1,23 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useAxios } from "../../hooks/useAxios";
+import axios from "axios";
 
 const Slug = () => {
-  const singleUser = useAxios();
+  const [user, setUser] = useState(null);
 
   const router = useRouter();
   const { slug } = router.query;
 
   useEffect(() => {
-    singleUser.fetchApi({
-      url: `https://fabrik-api.herokuapp.com/api/v1/fake/users/${slug}`,
-      method: "GET",
-    });
+    const getUser = async () => {
+      await axios
+        .get(`https://fabrik-api.herokuapp.com/api/v1/fake/users/${slug}`)
+        .then((res) => setUser(res.data?.data));
+    };
+    getUser();
   }, [slug]);
 
-  const user = singleUser?.data?.data;
-
-  if (singleUser.isLoading) return <div className="p-3">...loading</div>;
+  if (!user) return <div className="p-3">...loading</div>;
 
   return (
     <div className="p-3">
