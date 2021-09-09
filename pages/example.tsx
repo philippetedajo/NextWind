@@ -1,31 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import withSession from "../utils/session";
 import Link from "next/link";
 import axios from "axios";
 
-const Example = () => {
-  const [users, setUsers] = useState(null);
-
-  useEffect(() => {
-    const getAllUsers = async () => {
-      await axios
-        .get(`https://fabrik-api.herokuapp.com/api/v1/fake/users`)
-        .then((res) => setUsers(res.data?.data));
-    };
-    getAllUsers();
-  }, []);
+const Example = (data) => {
+  const [profile, setProfile] = useState(data?.profile?.data);
 
   const onDeleteUser = async (userId) => {
     await axios
       .delete(`https://fabrik-api.herokuapp.com/api/v1/fake/users/${userId}`)
       .then((res) => {
         if (res.data.code == 200) {
-          let newUsersList = users?.filter((u) => u.id != userId);
-          setUsers(newUsersList);
+          let newProfileList = profile?.filter((u) => u.id != userId);
+          setProfile(newProfileList);
         }
       });
   };
 
-  const profileList = users?.map((el) => {
+  const profileList = profile?.map((el) => {
     return (
       <div key={el.id} className="flex w-60 justify-between">
         <Link href={`users/${el.id}`}>
@@ -47,10 +39,23 @@ const Example = () => {
         <a className="border px-3 py-2 my-5 rounded">Create User</a>
       </Link>
       <div className="text-2xl">All profile</div>
-      <div className="mb-4">{users ? profileList : "loading..."}</div>
+      <div className="mb-4">{profileList}</div>
       <div className="text-2xl mb-2">Create a user</div>
     </div>
   );
 };
 
 export default Example;
+
+// @ts-ignore
+export const getServerSideProps = withSession(async ({ req, res }) => {
+  const user = req.session.get("user");
+  const profilesFetch = await axios.get(
+    `https://fabrik-api.herokuapp.com/api/v1/fake/users`
+  );
+  const profile = profilesFetch.data;
+
+  return {
+    props: { profile },
+  };
+});
