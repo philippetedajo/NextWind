@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React from "react";
 import axios from "axios";
 import withSession from "../../utils/session";
 
-const Slug = ({ singleProfile }) => {
+const Slug = ({ singleProfile, user }) => {
+  console.log(user);
   return (
     <div className="p-3">
       <div>{singleProfile.data.id}</div>

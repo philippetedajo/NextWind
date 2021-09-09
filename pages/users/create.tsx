@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import withSession from "../../utils/session";
 
-const Create = () => {
+const Create = ({ user }) => {
+  console.log(user);
   const router = useRouter();
   const [isCreatingUser, setIsCreatingUser] = useState(false);
 
@@ -33,3 +35,12 @@ const Create = () => {
 };
 
 export default Create;
+
+// @ts-ignore
+export const getServerSideProps = withSession(async ({ req, res }) => {
+  const user = req.session.get("user");
+
+  return {
+    props: { user },
+  };
+});
