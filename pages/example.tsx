@@ -3,21 +3,22 @@ import withSession from "../utils/session";
 import Link from "next/link";
 import axios from "axios";
 
-const Example = (data) => {
-  const [profile, setProfile] = useState(data?.profile?.data);
+const Example = ({ profile, user }) => {
+  const [allProfile, setAllProfile] = useState(profile?.data);
+  console.log(user);
 
   const onDeleteUser = async (userId) => {
     await axios
       .delete(`https://fabrik-api.herokuapp.com/api/v1/fake/users/${userId}`)
       .then((res) => {
         if (res.data.code == 200) {
-          let newProfileList = profile?.filter((u) => u.id != userId);
-          setProfile(newProfileList);
+          let newProfileList = allProfile?.filter((u) => u.id != userId);
+          setAllProfile(newProfileList);
         }
       });
   };
 
-  const profileList = profile?.map((el) => {
+  const profileList = allProfile?.map((el) => {
     return (
       <div key={el.id} className="flex w-60 justify-between">
         <Link href={`users/${el.id}`}>
@@ -56,6 +57,6 @@ export const getServerSideProps = withSession(async ({ req, res }) => {
   const profile = profilesFetch.data;
 
   return {
-    props: { profile },
+    props: { profile, user },
   };
 });

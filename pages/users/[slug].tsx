@@ -1,30 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import withSession from "../../utils/session";
 
-const Slug = () => {
-  const [user, setUser] = useState(null);
-
-  const router = useRouter();
-  const { slug } = router.query;
-
-  useEffect(() => {
-    const getUser = async () => {
-      await axios
-        .get(`https://fabrik-api.herokuapp.com/api/v1/fake/users/${slug}`)
-        .then((res) => setUser(res.data?.data));
-    };
-    getUser();
-  }, [slug]);
-
-  if (!user) return <div className="p-3">...loading</div>;
-
+const Slug = ({ singleProfile }) => {
   return (
     <div className="p-3">
-      <div>{user?.id}</div>
-      <div>{user?.firstname}</div>
+      <div>{singleProfile.data.id}</div>
+      <div>{singleProfile.data.firstname}</div>
     </div>
   );
 };
 
 export default Slug;
+
+// @ts-ignore
+export const getServerSideProps = withSession(async ({ req, res, params }) => {
+  const user = req.session.get("user");
+
+  const singleProfileFetch = await axios.get(
+    `https://fabrik-api.herokuapp.com/api/v1/fake/users/${params.slug}`
+  );
+  const singleProfile = singleProfileFetch.data;
+
+  return {
+    props: { singleProfile, user },
+  };
+});
