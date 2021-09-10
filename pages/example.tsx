@@ -53,7 +53,6 @@ export default Example;
 // @ts-ignore
 export const getServerSideProps = withSession(async ({ req, res }) => {
   const { user } = checkSession(req, res);
-
   const profile = await fetcher({
     url: `https://fabrik-api.herokuapp.com/api/v1/fake/users`,
     method: "GET",
