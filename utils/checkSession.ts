@@ -8,4 +8,6 @@ export const checkSession = (req, res) => {
     res.end();
     return { props: {} };
   }
+
+  return { user };
 };

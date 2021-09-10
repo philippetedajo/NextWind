@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { fetcher } from "../../utils/fetcher";
 import withSession from "../../utils/session";
+import { checkSession } from "../../utils/checkSession";
 
 const Create = ({ user }) => {
   const router = useRouter();
@@ -39,7 +40,7 @@ export default Create;
 
 // @ts-ignore
 export const getServerSideProps = withSession(async ({ req, res }) => {
-  const user = req.session.get("user");
+  const { user } = checkSession(req, res);
 
   return {
     props: { user },

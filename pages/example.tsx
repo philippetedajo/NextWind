@@ -3,6 +3,7 @@ import withSession from "../utils/session";
 import Link from "next/link";
 import { fetcher } from "../utils/fetcher";
 import { Response } from "../_types/fetcher_types";
+import { checkSession } from "../utils/checkSession";
 
 const Example = ({ profile, user }) => {
   const [allProfile, setAllProfile] = useState(profile?.data);
@@ -51,7 +52,8 @@ export default Example;
 
 // @ts-ignore
 export const getServerSideProps = withSession(async ({ req, res }) => {
-  const user = req.session.get("user");
+  const { user } = checkSession(req, res);
+
   const profile = await fetcher({
     url: `https://fabrik-api.herokuapp.com/api/v1/fake/users`,
     method: "GET",

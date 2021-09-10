@@ -1,9 +1,11 @@
 import React from "react";
 import withSession from "../../utils/session";
 import { fetcher } from "../../utils/fetcher";
+import { checkSession } from "../../utils/checkSession";
 
 const Slug = ({ singleProfile, user }) => {
   const { id, firstname } = singleProfile.data;
+  console.log(user);
 
   return (
     <div className="p-3">
@@ -17,7 +19,7 @@ export default Slug;
 
 // @ts-ignore
 export const getServerSideProps = withSession(async ({ req, res, params }) => {
-  const user = req.session.get("user");
+  const { user } = checkSession(req, res);
 
   const singleProfile = await fetcher({
     url: `https://fabrik-api.herokuapp.com/api/v1/fake/users/${params.slug}`,
