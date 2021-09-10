@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
   const checkSession = async () => {
     const response = await axios.get("/api/auth/user");
     setUser(response.data);
-    console.log(response.data);
+    // console.log(response.data);
   };
 
   useEffect(() => {

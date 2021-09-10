@@ -1,35 +1,44 @@
-import axios, { Method } from "axios";
-
-interface fetcherProps {
-  url: string;
-  method?: Method;
-  input?: object;
-  token?: string;
-}
+import axios from "axios";
+import { FetcherProps, FetcherResponse } from "../_types/fetcher_types";
 
 //normalize the response if necessary
-const responder = (type = false, message = "", data = null) => {
-  return { type: type, message: message, data: data };
+const responder = (type: string, message: string, data = null) => {
+  let response = { type: type, message: message, data: data };
+  // for debugging response :
+  console.log(response);
+  return response;
 };
 
 //get data from api
-const fetcher = async (options: fetcherProps) => {
+export const fetcher = async (options: FetcherProps) => {
   let header = { "Content-Type": "application/json" };
   if (options.token) header["Authorization"] = options.token;
 
-  // for debugging input:
+  // for debugging input :
   // console.log(options.input)
 
   try {
-    let response = await axios({
+    let result = await axios({
       url: options.url,
       method: options.method,
       data: options.input,
       headers: header,
     });
 
-    console.log(response.data);
-    return response.data;
+    switch (result.data.code) {
+      case 200:
+        return responder(
+          FetcherResponse.SUCCESS,
+          result.data.message,
+          result.data.data
+        );
+      default:
+        return responder(
+          FetcherResponse.OTHER,
+          result.data.message,
+          result.data.data
+        );
+    }
   } catch (error) {
     console.log("API Not functional");
     throw new Error(error);
