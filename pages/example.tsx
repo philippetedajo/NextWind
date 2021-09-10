@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import withSession from "../utils/session";
+import withSession, { checkSession } from "../utils/session";
 import Link from "next/link";
 import { fetcher } from "../utils/fetcher";
 import { Response } from "../_types/fetcher_types";
-import { checkSession } from "../utils/checkSession";
 
 const Example = ({ profile, user }) => {
   const [allProfile, setAllProfile] = useState(profile?.data);

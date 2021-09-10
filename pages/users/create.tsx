@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { fetcher } from "../../utils/fetcher";
-import withSession from "../../utils/session";
-import { checkSession } from "../../utils/checkSession";
+import withSession, { checkSession } from "../../utils/session";
 
 const Create = ({ user }) => {
   const router = useRouter();

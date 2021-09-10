@@ -1,7 +1,6 @@
 import React from "react";
-import withSession from "../../utils/session";
+import withSession, { checkSession } from "../../utils/session";
 import { fetcher } from "../../utils/fetcher";
-import { checkSession } from "../../utils/checkSession";
 
 const Slug = ({ singleProfile, user }) => {
   const { id, firstname } = singleProfile.data;
