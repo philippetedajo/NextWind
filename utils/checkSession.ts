@@ -6,6 +6,6 @@ export const checkSession = (req, res) => {
     res.setHeader("location", "/auth/login");
     res.statusCode = 302;
     res.end();
-    return { user };
+    return { props: {} };
   }
 };
