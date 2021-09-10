@@ -11,6 +11,7 @@ const Create = ({ user }) => {
     setIsCreatingUser(true);
     await fetcher({
       url: `https://fabrik-api.herokuapp.com/api/v1/fake/users/create`,
+      method: "POST",
       input: {
         role: "USER",
         firstname: "aureole",
