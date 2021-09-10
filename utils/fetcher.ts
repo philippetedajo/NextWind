@@ -20,7 +20,7 @@ export const fetcher = async (options: FetcherProps) => {
   try {
     let result = await axios({
       url: options.url,
-      method: options.method,
+      method: options.method = "GET",
       data: options.input,
       headers: header,
     });

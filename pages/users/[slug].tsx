@@ -21,7 +21,6 @@ export const getServerSideProps = withSession(async ({ req, res, params }) => {
 
   const singleProfile = await fetcher({
     url: `https://fabrik-api.herokuapp.com/api/v1/fake/users/${params.slug}`,
-    method: "GET",
   });
 
   return {
