@@ -16,7 +16,6 @@ const Slug = ({ singleProfile, user }) => {
 
 export default Slug;
 
-// @ts-ignore
 export const getServerSideProps = withSession(async ({ req, res, params }) => {
   const { user } = checkSession(req, res);
 

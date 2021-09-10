@@ -49,7 +49,6 @@ const Example = ({ profile, user }) => {
 
 export default Example;
 
-// @ts-ignore
 export const getServerSideProps = withSession(async ({ req, res }) => {
   const { user } = checkSession(req, res);
   const profile = await fetcher({

@@ -37,7 +37,6 @@ const Create = ({ user }) => {
 
 export default Create;
 
-// @ts-ignore
 export const getServerSideProps = withSession(async ({ req, res }) => {
   const { user } = checkSession(req, res);
 
