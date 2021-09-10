@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FetcherProps, FetcherResponse } from "../_types/fetcher_types";
+import { FetcherProps, Response } from "../_types/fetcher_types";
 
 //normalize the response if necessary
 const responder = (type: string, message: string, data = null) => {
@@ -28,16 +28,12 @@ export const fetcher = async (options: FetcherProps) => {
     switch (result.data.code) {
       case 200:
         return responder(
-          FetcherResponse.SUCCESS,
+          Response.SUCCESS,
           result.data.message,
           result.data.data
         );
       default:
-        return responder(
-          FetcherResponse.OTHER,
-          result.data.message,
-          result.data.data
-        );
+        return responder(Response.OTHER, result.data.message, result.data.data);
     }
   } catch (error) {
     console.log("API Not functional");

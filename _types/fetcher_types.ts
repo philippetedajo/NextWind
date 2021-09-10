@@ -7,7 +7,7 @@ export interface FetcherProps {
   token?: string;
 }
 
-export enum FetcherResponse {
+export enum Response {
   SUCCESS = "SUCCESS",
   FAILURE = "FAILURE",
   VALIDATION_ERROR = "VALIDATION_ERROR",

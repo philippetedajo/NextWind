@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import withSession from "../utils/session";
 import Link from "next/link";
-import axios from "axios";
+import { fetcher } from "../utils/fetcher";
+import { Response } from "../_types/fetcher_types";
 
 const Example = ({ profile, user }) => {
   const [allProfile, setAllProfile] = useState(profile?.data);
-  console.log(user);
 
   const onDeleteUser = async (userId) => {
-    await axios
-      .delete(`https://fabrik-api.herokuapp.com/api/v1/fake/users/${userId}`)
-      .then((res) => {
-        if (res.data.code == 200) {
-          let newProfileList = allProfile?.filter((u) => u.id != userId);
-          setAllProfile(newProfileList);
-        }
-      });
+    const data = await fetcher({
+      url: `https://fabrik-api.herokuapp.com/api/v1/fake/users/${userId}`,
+      method: "DELETE",
+    });
+
+    if (data.type === Response.SUCCESS) {
+      let newProfileList = allProfile?.filter((u) => u.id != userId);
+      setAllProfile(newProfileList);
+    }
   };
 
   const profileList = allProfile?.map((el) => {
@@ -30,6 +31,7 @@ const Example = ({ profile, user }) => {
         >
           Delete
         </button>
+        `
       </div>
     );
   });
@@ -51,10 +53,10 @@ export default Example;
 // @ts-ignore
 export const getServerSideProps = withSession(async ({ req, res }) => {
   const user = req.session.get("user");
-  const profilesFetch = await axios.get(
-    `https://fabrik-api.herokuapp.com/api/v1/fake/users`
-  );
-  const profile = profilesFetch.data;
+  const profile = await fetcher({
+    url: `https://fabrik-api.herokuapp.com/api/v1/fake/users`,
+    method: "GET",
+  });
 
   return {
     props: { profile, user },
