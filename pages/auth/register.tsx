@@ -4,8 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { RegisterForm } from "../../_types/auth_types";
 import { registerSchema } from "../../utils/schema";
 import AuthTemplate from "../../templates/auth.template";
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../../context";
+import { useEffect } from "react";
+import { useAuth } from "../../context";
 import { useRouter } from "next/router";
 
 const Register = () => {
@@ -18,7 +18,7 @@ const Register = () => {
     resolver: yupResolver(registerSchema),
   });
 
-  const { signup, user, isLoading } = useContext(AuthContext);
+  const { signup, user, isLoading } = useAuth();
 
   useEffect(() => {
     if (user && user?.isLoggedIn) {

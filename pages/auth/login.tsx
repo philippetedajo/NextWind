@@ -1,10 +1,10 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { AuthContext } from "../../context";
+import { useAuth } from "../../context";
 import AuthTemplate from "../../templates/auth.template";
 import { LoginForm } from "../../_types/auth_types";
 import { loginSchema } from "../../utils/schema";
@@ -19,7 +19,7 @@ const Login = () => {
     resolver: yupResolver(loginSchema),
   });
 
-  const { login, user, isLoading } = useContext(AuthContext);
+  const { login, user, isLoading } = useAuth();
 
   useEffect(() => {
     if (user && user?.isLoggedIn) {

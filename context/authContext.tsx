@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useEffect } from "react";
@@ -14,6 +14,10 @@ interface AuthContextInterface {
 }
 
 export const AuthContext = createContext<AuthContextInterface | null>(null);
+
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
 
 export const AuthProvider = ({ children }) => {
   const router = useRouter();
