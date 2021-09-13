@@ -4,7 +4,7 @@ import { fetcher } from "../../utils/fetcher";
 import withSession, { checkSession } from "../../utils/session";
 
 const Create = ({ user }) => {
-  const router = useRouter();
+  const { push } = useRouter();
   const [isCreatingUser, setIsCreatingUser] = useState(false);
 
   const onCreateUser = async () => {
@@ -21,9 +21,9 @@ const Create = ({ user }) => {
         email: "testsdfsd@test.com",
       },
     });
-
-    await router.push("/example");
     setIsCreatingUser(false);
+
+    push("/example");
   };
 
   return (
