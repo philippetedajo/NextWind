@@ -44,6 +44,6 @@ h2 {
 }
 
 .input-form {
-  @apply border rounded py-2 px-5 text-sm;
+  @apply border rounded py-1 px-5 text-sm;
 }
 

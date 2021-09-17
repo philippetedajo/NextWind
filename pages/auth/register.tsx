@@ -7,6 +7,7 @@ import AuthTemplate from "../../templates/auth.template";
 import { useEffect } from "react";
 import { useAuth } from "../../context";
 import { useRouter } from "next/router";
+import { Response } from "../../_types/fetcher_types";
 
 const Register = () => {
   const router = useRouter();
@@ -117,7 +118,9 @@ const Register = () => {
           </Link>
         </p>
 
-        <div className="pt-3 text-sm text-red-500">{user?.data?.message}</div>
+        <div className="pt-3 text-sm text-red-500">
+          {user?.type === Response.FAILURE ? user?.message : ""}
+        </div>
       </form>
     </div>
   );

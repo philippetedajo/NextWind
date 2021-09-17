@@ -2,6 +2,8 @@ import { createContext, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useEffect } from "react";
+import {fetcher} from "../utils/fetcher";
+import {Response} from "../_types/fetcher_types";
 
 interface AuthContextInterface {
   user: any;
@@ -28,9 +30,16 @@ export const AuthProvider = ({ children }) => {
   const login = async (input) => {
     try {
       setIsLoading(true);
-      const response = await axios.post("/api/auth/login", input);
-      setUser(response.data);
-      if (response.data.data.code === 200) await router.push("/dashboard");
+      const response = await fetcher({
+        url: "/api/auth/login",
+        method: "POST",
+        input,
+        internalApi: true,
+      });
+      setUser(response);
+
+      if (response.type === Response.SUCCESS) await router.push("/dashboard");
+
       setIsLoading(false);
       setError("");
     } catch (error) {
@@ -42,9 +51,17 @@ export const AuthProvider = ({ children }) => {
   const signup = async (input) => {
     try {
       setIsLoading(true);
-      const response = await axios.post("/api/auth/signup", input);
-      setUser(response.data);
-      if (response.data.data.code === 200) await router.push("/dashboard");
+      const response = await fetcher({
+        url: "/api/auth/signup",
+        method: "POST",
+        input,
+        internalApi: true,
+      });
+
+      setUser(response);
+
+      if (response.type === Response.SUCCESS)await router.push("/dashboard");
+
       setIsLoading(false);
       setError("");
     } catch (error) {

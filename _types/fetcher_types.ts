@@ -5,11 +5,11 @@ export interface FetcherProps {
   method?: Method;
   input?: object;
   token?: string;
+  internalApi?: boolean;
 }
 
 export enum Response {
   SUCCESS = "SUCCESS",
   FAILURE = "FAILURE",
   VALIDATION_ERROR = "VALIDATION_ERROR",
-  OTHER = "OTHER",
 }

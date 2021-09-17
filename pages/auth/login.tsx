@@ -8,6 +8,7 @@ import { useAuth } from "../../context";
 import AuthTemplate from "../../templates/auth.template";
 import { LoginForm } from "../../_types/auth_types";
 import { loginSchema } from "../../utils/schema";
+import { Response } from "../../_types/fetcher_types";
 
 const Login = () => {
   const router = useRouter();
@@ -84,7 +85,9 @@ const Login = () => {
           </Link>
         </div>
 
-        <div className="pt-3 text-sm text-red-500">{user?.data?.message}</div>
+        <div className="pt-3 text-sm text-red-500">
+          {user?.type === Response.FAILURE ? user?.message : ""}
+        </div>
       </form>
     </div>
   );
